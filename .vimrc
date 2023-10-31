@@ -20,7 +20,7 @@ call plug#begin()
 "
 " Make sure you use single quotes
 
-" Write PLUGINS here!-----------------------------
+" WRITE PLUGINS HERE!-----------------------------
 
 " Mark change on vim
 Plug 'airblade/vim-gitgutter'
@@ -90,7 +90,7 @@ Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-commentary'
 
 
-" End Write PLUGINS here!---------------------------
+" END WRITE PLUGINS HERE!---------------------------
 
 " " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
