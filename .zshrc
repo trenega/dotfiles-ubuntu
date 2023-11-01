@@ -228,12 +228,14 @@ autoload -U promptinit; promptinit
 PURE_CMD_MAX_EXEC_TIME=10
 #PURE_PROMPT_VICMD_SYMBOL
 #PURE_GIT_DOWN_ARROW
+
+# turn on git stash status
+zstyle :prompt:pure:git:stash show yes
+
 # change the path color
 zstyle :prompt:pure:path color cyan
 # change the color for both `prompt:success` and `prompt:error`
 zstyle ':prompt:pure:prompt:*' color cyan
-# turn on git stash status
-zstyle :prompt:pure:git:stash show yes
 prompt pure
 
 # End prompt pure------------------------------------
