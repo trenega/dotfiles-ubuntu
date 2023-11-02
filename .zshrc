@@ -28,11 +28,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # End Setting from ubuntu .bashrc---------
 
 ##Sample .zshrc file----------------------
@@ -66,6 +61,11 @@ fi
 export LESS='-R'
 
 ##ALIAS AND FUNCTIONS----------------------
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 alias copy='cp -ip' move='mv -i'
 
 alias d='cd ~/dotfiles'
@@ -75,6 +75,8 @@ alias ..2='cd ../..'
 alias ..3='cd ../../..'
 
 # alias diff='diff -y --suppress-common-lines --color=aut
+
+alias vino='vim -u NONE -N'
 
 alias em='emacs'                                # emacs
 alias emd='emacs --debug-init'
@@ -106,11 +108,6 @@ alias gs='git status'
 alias gsw='git switch'
 
 alias gal='alias | grep git'
-
-# tmux
-alias t='tmux'                                  # tmux
-alias tl='tmux ls'                              # tmux ls
-alias ts='tmux choose-tree -s'
 
 # irb simple prompt
 alias irbs='irb --simple-prompt'
