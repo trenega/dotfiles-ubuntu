@@ -561,6 +561,70 @@ nnoremap cp :set paste<CR>
 "挿入モードを抜けるとき、set nopaste を実行する。
 autocmd InsertLeave * set nopaste
 
+"eskk Setting-----------------------------
+" Reference: https://zenn.dev/kato_k/articles/753b36262b3213
+
+" eskk dictionary autoload
+if !filereadable(expand('~/.config/eskk/SKK-JISYO.L'))
+  call mkdir('~/.config/eskk', 'p')
+  call system('cd ~/.config/eskk/ && wget http://openlab.jp/skk/dic/SKK-JISYO.L.gz && gzip -d SKK-JISYO.L.gz')
+endif
+
+" eskk read dictionary
+let g:eskk#directory = "~/.config/eskk"
+let g:eskk#dictionary = { 'path': "~/.config/eskk/my_jisyo", 'sorted': 1, 'encoding': 'utf-8',}
+let g:eskk#large_dictionary = {'path': "~/.config/eskk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp',}
+
+" StatusLine dispy change mode
+function L_eskk_get_mode()
+    if (mode() == 'i') && eskk#is_enabled()
+        return g:eskk#statusline_mode_strings[eskk#get_mode()]
+    else
+        return ''
+    endif
+endfunction
+
+let g:lightline = {
+\   'active': {
+\     'left': [ ['mode', 'paste'], ['readonly', 'filename', 'eskk', 'modified'] ]
+\   },
+\   'component_function': {
+\     'eskk': 'L_eskk_get_mode'
+\   },
+\ }
+
+" Basic setting
+" https://zenn.dev/kouta/articles/87947515bff4da
+let g:eskk#kakutei_when_unique_candidate = 1 " 漢字変換した時に候補が1つの場合、自動的に確定する
+let g:eskk#enable_completion = 0             " neocompleteを入れないと、1にすると動作しなくなるため0推奨
+let g:eskk#keep_state = 0                    " ノーマルモードに戻るとeskkモードを初期値にする
+let g:eskk#egg_like_newline = 1              " 漢字変換を確定しても改行しない。
+
+" 表示文字を変更(オレ サンカクデ ハンダン デキナイ)
+" let g:eskk#marker_henkan = "`c`"
+" let g:eskk#marker_henkan_select = "`o`"
+" let g:eskk#marker_okuri = "`s`"
+let g:eskk#marker_jisyo_touroku = "`d`"
+
+" Sticky Shift
+autocmd User eskk-initialize-post call s:eskk_initial_pre()
+function! s:eskk_initial_pre() abort
+  EskkUnmap -type=sticky Q
+  EskkMap -type=sticky ;
+endfunction
+
+" 'l' inputed -> eskk mode break through
+augroup vimrc_eskk
+  autocmd!
+  autocmd User eskk-enable-post lmap <buffer> l <Plug>(eskk:disable)
+augroup END
+
+" eskk mode on keymapping
+imap jk <Plug>(eskk:toggle)
+cmap jk <Plug>(eskk:toggle)
+
+"End eskk Setting-------------------------
+
 " ----------------------------------------------------------------------------
 " ABBREVIATION
 " ----------------------------------------------------------------------------
