@@ -218,12 +218,12 @@ fi
 # sindresorhus/pure
 # Pretty, minimal and fast ZSH prompt
 #fpath+=("$(brew --prefix)/share/zsh/site-functions")
-fpath+=($HOME/.zsh/pure)
+# fpath+=($HOME/.zsh/pure)
 
 autoload -U promptinit; promptinit
 
 # optionally define some options
-#PURE_CMD_MAX_EXEC_TIME=10
+# PURE_CMD_MAX_EXEC_TIME=10
 #PURE_GIT_DOWN_ARROW
 #PURE_GIT_UP_ARROW
 #PURE_GIT_STASH_SYMBOL
@@ -235,8 +235,8 @@ zstyle :prompt:pure:path color cyan
 zstyle ':prompt:pure:prompt:*' color cyan
 
 # turn on git stash status
-# zstyle :prompt:pure:git:stash show yes
-zstyle :prompt:pure:git:fetch only_upstream yes
+zstyle :prompt:pure:git:stash show yes
+#zstyle :prompt:pure:git:fetch only_upstream yes
 
 prompt pure
 
