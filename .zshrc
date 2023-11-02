@@ -222,7 +222,10 @@ fpath+=("$(brew --prefix)/share/zsh/site-functions")
 autoload -U promptinit; promptinit
 
 # optionally define some options
-PURE_CMD_MAX_EXEC_TIME=10
+#PURE_CMD_MAX_EXEC_TIME=10
+#PURE_GIT_DOWN_ARROW
+#PURE_GIT_UP_ARROW
+#PURE_GIT_STASH_SYMBOL
 
 # change the path color
 zstyle :prompt:pure:path color cyan
