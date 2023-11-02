@@ -234,7 +234,8 @@ zstyle :prompt:pure:path color cyan
 zstyle ':prompt:pure:prompt:*' color cyan
 
 # turn on git stash status
-zstyle :prompt:pure:git:stash show yes
+# zstyle :prompt:pure:git:stash show yes
+zstyle :prompt:pure:git:fetch only_upstream yes
 
 prompt pure
 
