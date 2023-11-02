@@ -171,9 +171,9 @@ bindkey -M viins '^Y'  yank
 # Git git-completionでコマンドやブランチ名を補完する方法(zsh)
 # Refs: https://alpacat.com/blog/git-completion-zsh/
 # git-completion
-#fpath=(~/.zsh/completion $fpath)
-#autoload -U compinit
-#compinit -u
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit -u
 
 #End Complement for git commands----------
 
@@ -217,7 +217,7 @@ fi
 # prompt pure----------------------------------------
 # sindresorhus/pure
 # Pretty, minimal and fast ZSH prompt
-fpath+=("$(brew --prefix)/share/zsh/site-functions")
+#fpath+=("$(brew --prefix)/share/zsh/site-functions")
 
 autoload -U promptinit; promptinit
 
