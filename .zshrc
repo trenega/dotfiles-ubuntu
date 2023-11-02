@@ -68,7 +68,7 @@ alias l='ls -CF'
 
 alias copy='cp -ip' move='mv -i'
 
-alias d='cd ~/dotfiles'
+alias d='cd ~/dotfiles-ubuntu'
 alias tes='cd ~/pl/test'
 alias ..='cd ..'
 alias ..2='cd ../..'
