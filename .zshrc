@@ -218,7 +218,7 @@ fi
 # sindresorhus/pure
 # Pretty, minimal and fast ZSH prompt
 #fpath+=("$(brew --prefix)/share/zsh/site-functions")
-# fpath+=($HOME/.zsh/pure)
+fpath+=($HOME/.zsh/pure)
 
 autoload -U promptinit; promptinit
 
