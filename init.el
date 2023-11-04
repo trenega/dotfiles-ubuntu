@@ -324,6 +324,81 @@
 ;; in Clojure.
 (straight-use-package 'cider)
 
+;; rainbow-delimiters
+(straight-use-package 'rainbow-delimiters)
+
+;; ParEdit
+(straight-use-package 'paredit)
+
+;; gauche-mode
+(straight-use-package 'gauche-mode)
+
+;; highlight-indent-guides
+(straight-use-package 'highlight-indent-guides)
+
+;; dired-detalias
+;; http://emacs.rubikitch.com/sd1411-dired-wdired/
+(straight-use-package 'dired-details)
+
+;; dired-toggle
+;; http://emacs.rubikitch.com/sd1411-dired-wdired/
+(straight-use-package 'dired-toggle)
+
+
+;;--------------------------------------------------------
+;; End To install a package Write Here!
+;;--------------------------------------------------------
+
+;;; End straight.el---------------------------------------
+
+;;; End Package Manager Settings--------------------------
+
+;;;;------------------------------------------------------
+;;;; Pagckage Settings
+;;;;------------------------------------------------------
+
+;; Evil Settig
+(evil-mode 1)
+
+;; dired-recent
+(dired-recent-mode 1)
+
+;;; ivy Settings------------------------------------------
+;; refer: https://takaxp.github.io/articles/qiita-helm2ivy.html
+(when (require 'ivy nil t)
+
+  ;; M-o を ivy-hydra-read-action に割り当てる．
+  (when (require 'ivy-hydra nil t)
+    (setq ivy-read-action-function #'ivy-hydra-read-action))
+
+  ;; `ivy-switch-buffer' (C-x b) のリストに recent files と bookmark を含める．
+  (setq ivy-use-virtual-buffers t)
+
+  ;; ミニバッファでコマンド発行を認める
+  (when (setq enable-recursive-minibuffers t)
+    (minibuffer-depth-indicate-mode 1)) ;; 何回層入ったかプロンプトに表示．
+
+  ;; ESC連打でミニバッファを閉じる
+  (define-key ivy-minibuffer-map (kbd "<escape>") 'minibuffer-keyboard-quit)
+
+  ;; プロンプトの表示が長い時に折り返す（選択候補も折り返される）
+  (setq ivy-truncate-lines nil)
+
+  ;; リスト先頭で `C-p' するとき，リストの最後に移動する
+  (setq ivy-wrap t)
+
+  ;; アクティベート
+  (ivy-mode 1))
+
+;; 検索語のハイライト
+;; rers: https://takaxp.github.io/articles/qiita-helm2ivy.html
+
+
+;;; End ivy Settings--------------------------------------
+
+
+
+
 
 
 ;;;「Emacs実践入門」大竹智也[著]
