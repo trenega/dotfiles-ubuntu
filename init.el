@@ -357,6 +357,12 @@
 ;;;; Pagckage Settings
 ;;;;------------------------------------------------------
 
+;;;「Emacs実践入門」大竹智也[著]
+;; 行の折り返し表示を切り替える
+;; refer: 「Emacs実践入門」大竹智也[著] p.81
+(require 'bind-key)
+(bind-key "C-c l" 'toggle-truncate-lines)
+
 ;; Evil Settig
 (evil-mode 1)
 
@@ -393,16 +399,92 @@
 ;; 検索語のハイライト
 ;; rers: https://takaxp.github.io/articles/qiita-helm2ivy.html
 
-
 ;;; End ivy Settings--------------------------------------
 
+;; counsel Settings---------------------------------------
+(when (require 'counsel nil t)
+  ;; キーバインドは一例です．好みに変えましょう．
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "M-y") 'counsel-yank-pop)
+  (global-set-key (kbd "C-M-z") 'counsel-fzf)
+  (global-set-key (kbd "C-M-r") 'counsel-recentf)
+  (global-set-key (kbd "C-x C-b") 'counsel-ibuffer)
+;;  (global-set-key (kbd "C-M-f") 'counsel-ag)  ; C-M-f は元々はS式を単位としてカーソル移動するバインド
+  ;; アクティベート
+  (counsel-mode 1))
 
+;; swiper Settings
+(when (require 'swiper nil t)
 
+  ;; キーバインドは一例です．好みに変えましょう．
+  (global-set-key (kbd "M-s M-s") 'swiper-thing-at-point))
 
+;; counsel-recentf 再定義
+;; ファイルの表示を`~`から初める設定
+;; refer: https://takaxp.github.io/articles/qiita-helm2ivy.html#org87d665a3
+(defun ad:counsel-recentf ()
+  "Find a file on `recentf-list'."
+  (interactive)
+  (require 'recentf)
+  (recentf-mode)
+  (ivy-read "Recentf: "
+            (progn
+              (mapcar #'substring-no-properties recentf-list) ;; no need?
+              (mapcar #'abbreviate-file-name recentf-list)) ;; ~/
+            :action (lambda (f)
+                      (with-ivy-window
+                        (find-file f)))
+            :require-match t
+            :caller 'counsel-recentf))
+(advice-add 'counsel-recentf :override #'ad:counsel-recentf)
 
+;; End counsel Settings-----------------------------------
 
-;;;「Emacs実践入門」大竹智也[著]
-;; 行の折り返し表示を切り替える
-;; refer: 「Emacs実践入門」大竹智也[著] p.81
-(require 'bind-key)
-(bind-key "C-c l" 'toggle-truncate-lines)
+;;; Evil Leader-----------------------------------------
+;; Evil Leader provides the <leader> feature from Vim that
+;; provides an easy way to bind keys under a variable prefix key.
+;; For an experienced Emacs User it is nothing more than
+;; a convoluted key map, but for a Evil user coming from
+;; Vim it means an easier start.
+;; refer: htps://github.com/cofi/evil-leader
+(require 'evil-leader)
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+
+(evil-leader/set-key
+  "s" 'switch-to-buffer             ; Switch to buffer
+  "t" 'find-file                    ; find file Table
+  "r" 'insert-file                  ; insert-file
+  "w" 'save-buffer                  ; Wrote <file>
+  "k" 'kill-buffer                  ; Kill buffer
+  "q" 'save-buffers-kill-emacs      ; Quit save buffers kill emacs
+  "e" 'eval-last-sexp               ; Eval last sexp
+  "c" 'slime-compile-defun          ; slime Compile defun
+  "l" 'slime-compile-and-load-file  ; slime compile and Load file
+  "n" 'other-window                 ; move to next window
+  "p" 'other-window-backword        ; move to previous window
+  "2" 'split-window-vertically      ; split window vertically
+  "3" 'split-window-horizontally    ; vertically split
+  "0" 'delete-window                ; delete window
+  "1" 'delete-other-windows         ; delete other window "only one"
+  "d" 'scroll-one-line-ahead        ; one line scroll up
+  "u" 'scroll-one-line-behind       ; one line scroll down
+  ">" 'scroll-right                 ; window scroll to right
+  "<" 'scroll-left                  ; window scroll to left
+  "," 'point-to-top                 ; cursor goto top left corner
+  "." 'point-to-bottom              ; cursor goto bottom left corner
+  "!" 'line-to-top                  ; Move current line to top of window
+  "^" 'enlarge-window               ; window hight up one line
+  "-" 'shrink-window                ; window hight down one line
+  "}" 'enlarge-window-horizontally  ; window wide one enlargefd
+  "{" 'shrink-window-horizontally   ; window wide one shrink
+  "+" 'balance-windows              ; windows same size
+  "f" 'flycheck-list-errors         ; pop-up errors list
+  "a" 'beginning-of-line            ; go to beginning of line
+  ";" 'end-of-line                  ; got to end of line
+  "(" 'backward-kill-sexp           ; カーソルの前にあるS式を削除する
+  ")" 'kill-sexp                    ; カーソルの後にあるS式を削除する
+  )
+
+;;; End Evil Leader-------------------------------------
+
