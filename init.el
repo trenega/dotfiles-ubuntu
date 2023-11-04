@@ -79,24 +79,15 @@
 (add-to-list 'default-frame-alist
              '(font . "UDEV Gothic NF-18"))  ; font size:18
 
+
 ;; Alt key -> Meta key setting
 ;; refer: https://qiita.com/hayamiz/items/0f0b7a012ec730351678
 (when (eq system-type 'darwin)
   (setq ns-command-modifier (quote meta)))
 
+
 ;; 起動画面を表示しない
 (setq inhibit-startup-screen t)
-
-;;; 起動時に fullscreen にする
-;; (if (or (eq window-system 'ns) (eq window-system 'darwin))
-;;     (add-hook 'window-setup-hook
-;;               (lambda ()
-;;                 (set-frame-parameter nil 'fullscreen 'fullboth))))
-
-;; Unixコマンド エミュレーションを無効にする
-;; http://emacs.rubikitch.com/sd1412-eshell/
-(eval-after-load "esh-module"
-    '(setq eshell-modules-list (delq 'eshell-ls (delq 'eshell-unix eshell-modules-list))))
 
 ;; ビープ音禁止
 ;; http://yohshiy.blog.fc2.com/blog-entry-324.html
@@ -203,8 +194,8 @@
 ;;;「Emacs実践入門」大竹智也[著]
 ;; 行の折り返し表示を切り替える
 ;; refer: 「Emacs実践入門」大竹智也[著] p.81
-(require 'bind-key)
-(bind-key "C-c l" 'toggle-truncate-lines)
+;(require 'bind-key)
+;(bind-key "C-c l" 'toggle-truncate-lines)
 
 ;;; clipboard Setting
 ;; Emacsから他のエディターにAlt+vでペーストはできるが、その逆にEmacsへは
@@ -214,5 +205,39 @@
   (setq x-select-enable-clipboard t)))
 
 ;;;; End Initialization------------------------------------
+
+;;;;------------------------------------------------------
+;;;; Package Manager Settings
+;;;;------------------------------------------------------
+
+;;; straight.el
+;;  Next-generation, purely functional package manager for the Emacs hacker.
+;;  refer: github.com/radian-software/straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; Emacs version 27 以上のユーザーは以下を追加
+(setq package-enable-at-startup nil)
+
+;; use-package との統合
+(straight-use-package 'use-package)
+
+;; el-patch
+;; Future-proof your Emacs Lisp customizations!
+;; Like the advice system, el-patch provides a way to customize
+;; the behavior of Emacs Lisp functions that do not provide
+;; enough variables and hooks to let you make them do what you
+;; want.
+(straight-use-package 'el-patch)
 
 
