@@ -240,4 +240,89 @@
 ;; want.
 (straight-use-package 'el-patch)
 
+;;--------------------------------------------------------
+;; To install a package Write Here!
+;;--------------------------------------------------------
+
+
+;; zenburn-theme
+(straight-use-package 'zenburn-theme)
+
+;; Evil
+;; Evil is an extensible vi layer for Emacs.
+;; Also see our page on EmacsWiki.
+(straight-use-package 'evil)
+
+;; ivy
+;; Ivy - a generic completion frontend for Emacs,
+(straight-use-package 'ivy)
+
+;; swiper
+;; Swiper - isearch with an overview, and more.
+(straight-use-package 'swiper)
+
+;; counsel
+;; Just call one of the interactive functions in this file
+;; to complete the corresponding thing using `ivy'.
+(straight-use-package 'counsel)
+
+;; dired-recent
+;; A history of paths visited with Emacs dired.
+(straight-use-package 'dired-recent)
+
+;; bind-key
+(straight-use-package 'bind-key)
+
+;; key-chord
+;; Map pairs of simultaneously pressed keys to commands
+(straight-use-package 'key-chord)
+
+;; evil-leader
+(straight-use-package 'evil-leader)
+
+;; company
+(straight-use-package 'company)
+
+;; comment-dwim-2
+(straight-use-package 'comment-dwim-2)
+
+;; flycheck
+(straight-use-package 'flycheck)
+
+;; flycheck-pos-tip
+(straight-use-package 'flycheck-pos-tip)
+
+;; flycheck-haskell
+(straight-use-package 'flycheck-haskell)
+
+;; darkroom
+(straight-use-package 'darkroom)
+
+;; tempbuf.el
+;; 不要なバッファを自動的にkillしてくれる
+;; (straight-use-package 'tempbuf)
+
+;; smex
+;; M-xを超強化するsmexパッケージ
+(straight-use-package 'smex)
+
+;; ido-vertical-mode
+;; smexパッケージといっしょに使う
+(straight-use-package 'ido-vertical-mode)
+
+;; smartrep
+;; プレフィクスキーを省略させる
+;; ウィンドウ操作をひとまとめにする
+(straight-use-package 'smartrep)
+
+;; evil-surround
+(straight-use-package 'evil-surround)
+
+;; ediprolog
+(straight-use-package 'ediprolog)
+
+;; clojure-mode
+(straight-use-package 'clojure-mode)
+
+
 
