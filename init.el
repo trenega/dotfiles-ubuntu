@@ -324,5 +324,10 @@
 ;; clojure-mode
 (straight-use-package 'clojure-mode)
 
+;; cider
+;; CIDER extends Emacs with support for interactive programming
+;; in Clojure.
+(straight-use-package 'cider)
+
 
 
