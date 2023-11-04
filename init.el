@@ -488,3 +488,21 @@
 
 ;;; End Evil Leader-------------------------------------
 
+;; smartrep
+;; プレフィクスキーを省略させる
+;; ウィンドウ操作をひとまとめにする
+;; 始めに"C-x"キーを押してから、"一文字"を入力する
+(require 'smartrep)
+(smartrep-define-key global-map "C-x"
+  '(("x" . (other-window))
+    ("0" . (delete-window))
+    ("1" . (delete-other-windows))
+    ("2" . (split-window-below))
+    ("3" . (split-window-right))
+    ("{" . (shrink-window-horizontally))
+    ("}" . (enlarge-window-horizontally))
+    ("+" . (balance-windows))
+    ("^" . (enlarge-window))
+    ("-" . (shrink-window))))
+
+
