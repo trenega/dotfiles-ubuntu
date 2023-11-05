@@ -513,15 +513,14 @@
 ;; cclをload-pathに追加
 (add-to-list 'load-path (expand-file-name
              "~/.roswell/impls/x86-64/darwin/ccl-bin/1.12.2/dx86cl64"))
-
-;; ~/.roswell/lisp/slimeをload-pathに追加
+;; ~/.emacs.d/straight/repos/slimeをload-pathに追加
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/straight/repos/slime"))
-;; SLIMEのロード
-(require 'slime)
-(slime-setup '(slime-repl slime-fancy slime-banner slime-indentation))
 ;; SLIMEからの入力をUTF-8に設定
 (setq slime-net-coding-system 'utf-8-unix)
 
+;; SLIMEのロード
+(require 'slime)
+(slime-setup '(slime-repl slime-fancy slime-banner slime-indentation))
 ;; ros install slime したので、追記
 (load (expand-file-name "~/.roswell/helper.el"))
 
