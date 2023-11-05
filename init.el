@@ -583,4 +583,11 @@
 (bind-key "M-x" 'smex)
 (bind-key "M-X" 'smex-major-mode-commands)
 
+;; evil-surround
+(require 'evil-surround)
+(global-evil-surround-mode 1)
+
+;; rainbow-delimiters
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 
