@@ -524,4 +524,50 @@
 ;; ros install slime したので、追記
 (load (expand-file-name "~/.roswell/helper.el"))
 
+;;; company Setting---------------------------------------
+;; 補完用パッケージ
+;; refer: https://qiita.com/sune2/items/b73037f9e85962f5afb7
+(require 'company)
+;; (global-company-mode t) ; 全バッファで有効にする
+(add-hook 'after-init-hook 'global-company-mode) ; refer: http://company-mode.github.io/
+(setq company-idle-delay 0) ; デフォルトは0.5
+(setq company-minimum-prefix-length 2) ; デフォルトは4
+(setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
 
+;; 色付けをauto-complete風に変更する
+;; refer: https://qiita.com/syohex/items/8d21d7422f14e9b53b17
+(set-face-attribute 'company-tooltip nil
+                    :foreground "black" :background "lightgrey")
+(set-face-attribute 'company-tooltip-common nil
+                    :foreground "black" :background "lightgrey")
+(set-face-attribute 'company-tooltip-common-selection nil
+                    :foreground "white" :background "steelblue")
+(set-face-attribute 'company-tooltip-selection nil
+                    :foreground "black" :background "steelblue")
+(set-face-attribute 'company-preview-common nil
+                    :background nil :foreground "lightgrey" :underline t)
+(set-face-attribute 'company-scrollbar-fg nil
+                    :background "orange")
+(set-face-attribute 'company-scrollbar-bg nil
+                    :background "gray40")
+
+;; Keybind
+;; refer: https://qiita.com/syohex/items/8d21d7422f14e9b53b17
+(global-set-key (kbd "C-M-i") 'company-complete)
+
+;; C-n, C-pで補完候補を次/前の候補を選択
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+(define-key company-search-map (kbd "C-n") 'company-select-next)
+(define-key company-search-map (kbd "C-p") 'company-select-previous)
+
+;; C-sで絞り込む
+(define-key company-active-map (kbd "C-s") 'company-filter-candidates)
+
+;; TABで候補を設定
+(define-key company-active-map (kbd "C-i") 'company-complete-selection)
+
+;; 各種メジャーモードでも C-M-iで company-modeの補完を使う
+(define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
+
+;;; End company Settings-----------------------------------
