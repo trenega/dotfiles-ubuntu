@@ -571,3 +571,16 @@
 (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
 
 ;;; End company Settings-----------------------------------
+
+;; smex
+;; M-x を超強化するsmexパッケージ
+(setq ido-max-window-height 0.75)
+(setq ido-enable-flex-matching t)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+(smex-initialize)
+(require 'bind-key)
+(bind-key "M-x" 'smex)
+(bind-key "M-X" 'smex-major-mode-commands)
+
+
