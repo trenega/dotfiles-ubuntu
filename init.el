@@ -75,19 +75,29 @@
 ;;;; Initialization
 ;;;;------------------------------------------------------
 
-;; font
-(add-to-list 'default-frame-alist
-             '(font . "UDEV Gothic NF-18"))  ; font size:18
-
-
-;; Alt key -> Meta key setting
-;; refer: https://qiita.com/hayamiz/items/0f0b7a012ec730351678
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta)))
+; (add-to-list 'default-frame-alist
+;              '(font . "UDEV Gothic NF-18"))
 
 
 ;; 起動画面を表示しない
 (setq inhibit-startup-screen t)
+
+;; ウィンドウ（フレーム）のサイズ設定する
+;; [重要]: (height . 38) を (height . 39) に変更しないこと！！
+;; Emacs が立ち上がらなくなる！！
+(setq default-frame-alist '((width . 84) (height . 38)))
+;;(setq default-frame-alist '((width . 125) (height . 38)))  ;; fullscreen
+
+;;; 起動時に fullscreen にする
+;; (if (or (eq window-system 'ns) (eq window-system 'darwin))
+;;     (add-hook 'window-setup-hook
+;;               (lambda ()
+;;                 (set-frame-parameter nil 'fullscreen 'fullboth))))
+
+;; Unixコマンド エミュレーションを無効にする
+;; http://emacs.rubikitch.com/sd1412-eshell/
+(eval-after-load "esh-module"
+    '(setq eshell-modules-list (delq 'eshell-ls (delq 'eshell-unix eshell-modules-list))))
 
 ;; ビープ音禁止
 ;; http://yohshiy.blog.fc2.com/blog-entry-324.html
@@ -191,7 +201,6 @@
 (add-hook 'evil-insert-state-entry-hook #'my/display-set-absolute)
 (add-hook 'evil-insert-state-exit-hook #'my/display-set-relative)
 
-
 ;;; clipboard Setting
 ;; Emacsから他のエディターにAlt+vでペーストはできるが、その逆にEmacsへは
 ;; ペーストできない。
@@ -200,6 +209,33 @@
   (setq x-select-enable-clipboard t)))
 
 ;;;; End Initialization------------------------------------
+
+;;; custom-set--------------------------------------------
+;;  These 'custom-set are from `Emacs'! I don't write here.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+;; '(highlight-indent-guides-method 'character)
+ '(initial-frame-alist '((height . 38) (width . 125) (left . 0) (top . 0)))
+ ;;'(menu-bar-mode nil)
+ '(tool-bar-mode nil))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "UDEV Gothic 35NF" :foundry "nil" :slant normal :weight regular :height 240 :width normal))))
+ '(ivy-current-match ((((class color) (background light)) :background "#FFF3F3" :distant-foreground "#000000") (((class color) (background dark)) :background "#404040" :distant-foreground "#abb2bf")))
+ '(ivy-minibuffer-match-face-1 ((((class color) (background light)) :foreground "#666666") (((class color) (background dark)) :foreground "#999999")))
+ '(ivy-minibuffer-match-face-2 ((((class color) (background light)) :foreground "#c03333" :underline t) (((class color) (background dark)) :foreground "#e04444" :underline t)))
+ '(ivy-minibuffer-match-face-3 ((((class color) (background light)) :foreground "#8585ff" :underline t) (((class color) (background dark)) :foreground "#7777ff" :underline t)))
+ '(ivy-minibuffer-match-face-4 ((((class color) (background light)) :foreground "#439943" :underline t) (((class color) (background dark)) :foreground "#33bb33" :underline t))))
+
+;;; End custom-set----------------------------------------
 
 ;;;;------------------------------------------------------
 ;;;; Package Manager Settings
@@ -399,9 +435,10 @@
 ;; 検索語のハイライト
 ;; rers: https://takaxp.github.io/articles/qiita-helm2ivy.html
 
+
 ;;; End ivy Settings--------------------------------------
 
-;; counsel Settings---------------------------------------
+;; counsel Settingsl--------------------------------------
 (when (require 'counsel nil t)
   ;; キーバインドは一例です．好みに変えましょう．
   (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -438,7 +475,7 @@
             :caller 'counsel-recentf))
 (advice-add 'counsel-recentf :override #'ad:counsel-recentf)
 
-;; End counsel Settings-----------------------------------
+;; End counsel Settingsl--------------------------------
 
 ;;; Evil Leader-----------------------------------------
 ;; Evil Leader provides the <leader> feature from Vim that
@@ -513,14 +550,15 @@
 ;; cclをload-pathに追加
 (add-to-list 'load-path (expand-file-name
              "~/.roswell/impls/x86-64/darwin/ccl-bin/1.12.2/dx86cl64"))
+
 ;; ~/.emacs.d/straight/repos/slimeをload-pathに追加
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/straight/repos/slime"))
-;; SLIMEからの入力をUTF-8に設定
-(setq slime-net-coding-system 'utf-8-unix)
-
 ;; SLIMEのロード
 (require 'slime)
 (slime-setup '(slime-repl slime-fancy slime-banner slime-indentation))
+;; SLIMEからの入力をUTF-8に設定
+(setq slime-net-coding-system 'utf-8-unix)
+
 ;; ros install slime したので、追記
 (load (expand-file-name "~/.roswell/helper.el"))
 
@@ -590,4 +628,334 @@
 ;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
+;; CIDER
+(require 'cider)
+;; clojure-modeでCIDERを有効にする
+(add-hook 'clojure-mode-hook 'cider-mode)
+;; CIDERのstart bannerを消す
+(setq-default cider-repl-display-help-banner nil)
 
+;; ParEdit
+(require 'paredit)
+
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+
+;; highlight-indent-guides
+(require 'highlight-indent-guides)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
+;;; diredでファイル名のみを表示する
+;; http://emacs.rubikitch.com/sd1411-dired-wdired/
+(require 'dired)
+(require 'dired-details)
+(dired-details-install)
+(setq dired-details-hidden-string "")
+(setq dired-details-hide-link-targets nil)
+
+;; wdired(Writable DIRED)
+(require 'wdired)
+(setq wdired-allow-to-change-permissions t)
+(define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
+
+;;; End Pagckage Settings-------------------------------
+
+;;;;----------------------------------------------------
+;;; Custom Bind
+;;;;----------------------------------------------------
+
+;; C-hをBackspaceに変更、C-?にhelpをmapping
+;; refer: malkalech.com/emacs_c-h_backspac:
+;; C-h -> delete-backward-char
+(define-key key-translation-map [?\C-h] [?\C-?])
+
+;; C-h -> Backspace
+(require 'bind-key)
+(bind-key* "C-h" 'delete-backward-char)
+
+;; C-? -> help
+;; (global-set-key (kbd "C-?") 'help-for-help)
+(bind-key* "C-?" 'help-for-help)
+
+;; eshell
+;; http://yohshiy.blog.fc2.com/blog-entry-323.html
+(global-set-key (kbd "<f8>") 'eshell)
+
+;; "fd" to Esc
+;; Exit instert mode by pressing f and then d quickly
+;; https://stackoverflow.com/questions/10569165/how-to-map-jj-to-esc-in-emacs-evil-mode
+(key-chord-mode 1)
+(setq key-chord-two-keys-delay           0.15
+      key-chord-safety-interval-backward 0.1
+      key-chord-safety-interval-forward  0.25)
+(key-chord-define evil-insert-state-map "fd" 'evil-normal-state)
+
+;; A TWO-key chord-------------------------------------
+(key-chord-mode 1)
+(setq key-chord-two-keys-delay           0.15
+      key-chord-safety-interval-backward 0.1
+      key-chord-safety-interval-forward  0.25)
+
+;; Don't use shift key. But I can type " ~ ! @ # $ % ^ & * ( ) _ + : " ".
+;; (key-chord-define-global ";`"  "~")
+;; (key-chord-define-global ";1"  "!")
+;; (key-chord-define-global ";2"  "@")
+;; (key-chord-define-global ";3"  "#")
+;; (key-chord-define-global ";4"  "$")
+;; (key-chord-define-global ";5"  "%")
+;; (key-chord-define-global ";6"  "^")
+;; (key-chord-define-global "a7"  "&")
+;; (key-chord-define-global "a8"  "*")
+;; (key-chord-define-global "a9"  "(")
+;; (key-chord-define-global "a0"  ")")
+;; (key-chord-define-global "a-"  "_")
+;; (key-chord-define-global "a="  "+")
+
+;; eval-defun
+(key-chord-define-global "ed" 'eval-defun)
+
+;; scheme-compile-file
+(key-chord-define-global "sc" 'scheme-compile-file)
+
+;; scheme-load-file
+(key-chord-define-global "sl" 'scheme-load-file)
+
+;; switch-to-scheme
+(key-chord-define-global "go" 'switch-to-scheme)  ; "go" -> "gosh>"
+
+;; indent-sexp
+(key-chord-define-global "is" 'indent-sexp)
+
+;; lisp-complete-symbol
+(key-chord-define-global "lc" 'lisp-complete-symbol)
+
+;; dired
+(key-chord-define-global "di" 'dired)
+
+;; End A TWO-key chord----------------------------------
+
+;; comment out
+;; comment-dwim-2
+(require 'bind-key)
+(bind-key "M-;" 'comment-dwim-2)
+
+;; C-u -> scroll up
+;; org-modeと関連パッケージには、C-uに多くの機能が付属してます。
+;; refer: stackoverflow.com/questions/14302171/ctrlu-in-emacs-when-using-evil-key-bindings
+;; (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+;; (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+;; (define-key evil-insert-state-map (kbd "C-u")
+;; 	    (lambda ()
+;; 	      (interactive)
+;; 	      (evil-delete (point-at-bol) (point))))
+
+;; M-x zap-up-to-char -> M-z
+;; refer: emacs.rubikitch.com/sd1507-builtin/
+;; 指定した文字の直前までを削除する
+;; (require 'misc)
+;; (bind-key "M-z" 'zap-up-to-char)
+;; 削除対象をハイライトしてくれる
+(require 'bind-key)
+(bind-key "M-z" 'zop-up-to-char)
+
+;; 単語移動の亜種
+;; refer: emacs.rubikitch.com/sd1507-builtin/
+(require 'misc)
+(require 'bind-key)
+(bind-key "M-f" 'forward-to-word)  ;移動先が先頭になる
+(bind-key "M-b" 'backward-to-word) ;移動先が末尾になる
+
+;; 設定ファイル用のメジャーモードの定義
+;; refer: emacs.rubikitch.com/sd1508-emacs-column/
+(require 'generic-x)
+
+;; SWI-Prolog Settings
+;; (global-set-key "\C-c\C-e" 'ediprolog-dwim)
+;; (require 'ediprolog)
+;;(setq ediprolog-system 'swi)
+(setq prolog-system 'swi)  ; optional, the system you are using;
+                            ; see `prolog-system' below for possible values
+(setq auto-mode-alist (append '(("\\.pl\\'" . prolog-mode)
+                                 ("\\.m\\'" . mercury-mode))
+                                auto-mode-alist))
+
+;; view-mode と通常モードの切り替えコマンド
+;; https://mugijiru.github.io/.emacs.d/editing/view-mode/
+(defun my/toggle-view-mode ()
+  "view-mode と通常モードの切り替えコマンド"
+  (interactive)
+  (cond (view-mode
+         (view-mode -1))
+        (t
+         (view-mode 1))))
+
+;; whitespace-mode
+;; https://mugijiru.github.io/.emacs.d/editing/view-mode/
+(require 'whitespace)
+(setq whitespace-style '(face
+                         trailing
+                         tabs
+                         spaces
+                         empty))
+
+;; 保存時に自動的に余計な空白を消す
+;; https://mugijiru.github.io/.emacs.d/editing/view-mode/
+(setq whitespace-action '(auto-cleanup))
+
+;; whitespace-mode
+;;(global-whitespace-mode 1)
+
+;; alias--------------------------------------------------
+;; alias my-keys
+(defalias 'my-key 'describe-personal-keybindings)
+
+;; alias bindings
+(defalias 'bindings 'describe-bindings)
+
+;; alias indent-sexp
+(defalias 'is 'indent-sexp)
+
+;; End alias----------------------------------------------
+
+;;; End Custom Bind------------------------------------
+
+;;;;------------------------------------------------------
+;;;; Customize Settings
+;;;;------------------------------------------------------
+
+;; cideraで補完候補をfuzzy matchさせる
+;; refer: docs.cider.mx/cider/usage/code_completion.html#fuzzy-condidate-matching
+(add-hook 'cider-repl-mode-hook
+          #'cider-company-enable-fuzzy-completion)
+(add-hook 'cider-mode-hook
+          #'cider-company-enable-fuzzy-completion)
+
+;; Mac OS のクリップボードと同期する
+;; https://suwaru.tokyo/%E3%80%90%E7%B0%A1%E5%8D%98%E3%80%91emacs%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9%E3%80%90init-el%E3%80%91/
+(defun copy-from-osx ()
+ (shell-command-to-string "pbpaste"))
+(defun paste-to-osx (text &optional push)
+ (let ((process-connection-type nil))
+     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+       (process-send-string proc text)
+       (process-send-eof proc))))
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
+
+;; End suraru.tokyo
+
+;;; Gauche------------------------------------------------
+;; Schemeの処理系
+;; refer: https://haskell.hatenablog.com/entry/Settings-to-use-Gauche_Scheme-with-Emacs
+;; 日本語を扱うことを可能にする
+(modify-coding-system-alist 'process "gosh" '(utf-8 . utf-8))
+
+;; Gauche Settings
+(setq scheme-program-name "gosh -i")
+(autoload 'scheme-mode "cmuscheme" "Major mode for scheme." t)
+(autoload 'run-scheme "cmuscheme" "Run a n inferior Scheme process." t)
+
+(defun scheme-other-window ()
+  "Run scheme on other window"
+  (interactive)
+  (switch-to-buffer-other-window
+    (get-buffer-create "*scheme*"))
+  (run-scheme scheme-program-name))
+
+(define-key global-map
+  "\C-cs" 'scheme-other-window)
+
+;;(require 'gauche-mode-autoloads)
+
+;;; End Gauche--------------------------------------------
+
+;;; Schemeの式をEmacsで簡単に実行する------------------------
+;; refer: https://ryu-tk.hatenablog.com/entry/2021/12/21/013537
+;; (defun my-execute-scheme ()
+;;   (interactive)
+;;   (if (string= mode-name "Scheme")
+;;       (progn (run-scheme scheme-program-name)
+;;              (end-of-buffer)
+;;              (other-window -1)
+;;              (scheme-send-last-sexp))
+;;     )
+;;   )
+
+;; (add-hook 'scheme-mode-hook
+;;           '(lambda ()
+;;              (define-key scheme-mode-map (kbd "C-c C-j") 'my-execute-scheme)))
+
+
+;; (defun my-execute-scheme-all ()
+;;   (interactive)
+;;   (if (string= mode-name "Scheme")
+;;       (progn (run-scheme scheme-program-name)
+;;              (end-of-buffer)
+;;              (other-window -1)
+;;              (scheme-load-file (buffer-file-name (current-buffer))))))
+;; ;;(global-set-key (kbd "C-c C-a") 'my-execute-scheme-all)
+;; (add-hook 'scheme-mode-hook
+;;           '(lambda ()
+;;              (define-key scheme-mode-map (kbd "C-c C-a") 'my-execute-scheme-all)))
+
+;;; End Schemeの式をEmacsで簡単に実行する--------------------
+
+
+;;; End Customize Settings--------------------------------
+
+;;;;------------------------------------------------------
+;;;; Color
+;;;;------------------------------------------------------
+
+;;; 画面を黒く設定する
+;; refer: kei10in.hatenablog.jp/entry/20101101/1288617632
+(setq default-frame-alist
+      (append
+       (list
+        '(background-color . "Black")
+        '(foreground-color . "Lightgray")
+        '(cursor-color . "Gray")
+        )
+       default-frame-alist))
+
+;;; zenburn-theme
+;; To Customize just the lighter background colors,
+;; you could add to your init file:
+;; refer: github.com/bbatsov/zenburn-emacs
+(setq zenburn-override-colors-alist
+      '(("zenburn-bg+05" . "#282828")
+        ("zenburn-bg+1"  . "#2F2F2F")
+        ("zenburn-bg+2"  . "#3F3F3F")
+        ("zenburn-bg+3"  . "#4F4F4F")))
+
+(load-theme 'zenburn t)
+
+;;; visual modeの範囲指定を見易くする
+;; refs :https://cortyuming.hateblo.jp/entry/20140218/p1
+(set-face-attribute 'highlight nil :foreground 'unspecified)
+
+;;; Emacsで背景色の透明度を変更する------------------------
+;; http://osanai.org/17/
+;; (if window-system (progn
+;;   (set-background-color "Black")
+;;   (set-foreground-color "LightGray")
+;;   (set-cursor-color "Gray")
+;;   (set-frame-parameter nil 'alpha 50))) ;透明度
+
+;;; Emacsの画面に透明度を設定する
+(defun set-transparency ()
+  "set frame transparency"
+  (set-frame-parameter nil 'alpha 50))  ;透明度
+
+;;; 透明度を変更するコマンド M-x set-alpha
+;; refer: http://qiita.com/marcy@github/items/ba0d018a03381a964f24
+(defun set-alpha (alpha-num)
+  "set frame parameter 'alpha"
+  (interactive "nAlpha: ")
+  (set-frame-parameter nil 'alpha (cons alpha-num '(50))))
+
+;;; End Emacsで背景色の透明度を変更する--------------------
+
+;;;; End Color-----------------------------------------
+
+;;; ~/.emacs.d/init.el ends here
