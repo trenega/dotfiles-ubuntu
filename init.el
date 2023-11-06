@@ -1,6 +1,6 @@
-;;;; nis's ~/.emacs.d/init.el
+;;;; nis's ~/.emacs.d/init.el on Ubuntu
 ;; Takashi Niijima
-;; 2023-09-05
+;; 2023-11-06
 
 ;;;;------------------------------------------------------
 ;;;; Define function
@@ -75,9 +75,14 @@
 ;;;; Initialization
 ;;;;------------------------------------------------------
 
-; (add-to-list 'default-frame-alist
-;              '(font . "UDEV Gothic NF-18"))
+;; Alt key -> Meta key setting
+;; refer: https://qiita.com/hayamiz/items/0f0b7a012ec730351678
+(when (eq system-type 'darwin)
+  (setq ns-command-modifier (quote meta)))
 
+;; font
+(add-to-list 'default-frame-alist
+             '(font . "UDEV Gothic NF-18"))
 
 ;; 起動画面を表示しない
 (setq inhibit-startup-screen t)
@@ -85,7 +90,7 @@
 ;; ウィンドウ（フレーム）のサイズ設定する
 ;; [重要]: (height . 38) を (height . 39) に変更しないこと！！
 ;; Emacs が立ち上がらなくなる！！
-(setq default-frame-alist '((width . 84) (height . 38)))
+;(setq default-frame-alist '((width . 84) (height . 38)))
 ;;(setq default-frame-alist '((width . 125) (height . 38)))  ;; fullscreen
 
 ;;; 起動時に fullscreen にする
@@ -275,6 +280,11 @@
 ;; To install a package Write Here!
 ;;--------------------------------------------------------
 
+;; exec-path-from-shell
+;; システムPATHの引き継ぎ
+;; GUI版のEmacsではシステムパスを引き継がないことがあるので
+;; このパッケージでパスを引き継ぎます
+(straight-use-package 'exec-path-from-shell)
 
 ;; zenburn-theme
 (straight-use-package 'zenburn-theme)
@@ -392,6 +402,14 @@
 ;;;;------------------------------------------------------
 ;;;; Pagckage Settings
 ;;;;------------------------------------------------------
+
+;; exec-path-from-shell
+;; システムPATHの引き継ぎ
+;; GUI版のEmacsではシステムパスを引き継がないことがあるので
+;; このパッケージでパスを引き継ぎます
+(require 'exec-path-from-shell)
+;(when (memq window-system '(mac ns x))
+(exec-path-from-shell-initialize)
 
 ;;;「Emacs実践入門」大竹智也[著]
 ;; 行の折り返し表示を切り替える
