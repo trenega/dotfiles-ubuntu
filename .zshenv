@@ -1,4 +1,4 @@
-#################################################################### 
+####################################################################
 #
 #  .zshenv file
 #
@@ -6,7 +6,7 @@
 #
 #  2023-10-26
 #
-#################################################################### 
+####################################################################
 
 #Sample .zshenv file----------------------
 # http://www.gentei.org/~yuuji/support/zsh/files/zshenv
@@ -27,7 +27,10 @@ Path=($path /usr/*/bin(N-/) /usr/local/*/bin(N-/) /var/*/bin(N-/))
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # UDEVGothic_NF font path
-PATH=$PATH":~/.local/share/fonts"
+export PATH=~/.local/share/fonts:$PATH
+
+# sharkdp/bat
+export PATH=~/.local/bin:$PATH
 
 #--------------------------------------------------------------------
 # PATH MODIFICATIONS
