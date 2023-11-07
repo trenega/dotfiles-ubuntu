@@ -841,7 +841,7 @@
 ;;;; Customize Settings
 ;;;;------------------------------------------------------
 
-;; cideraで補完候補をfuzzy matchさせる
+;; ciderで補完候補をfuzzy matchさせる
 ;; refer: docs.cider.mx/cider/usage/code_completion.html#fuzzy-condidate-matching
 (add-hook 'cider-repl-mode-hook
           #'cider-company-enable-fuzzy-completion)
