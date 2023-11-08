@@ -66,7 +66,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias mv='mv -i' alias cp='cp -i'
+alias mv='mv -i' alias cp='cp -bi'
 alias copy='cp -ip' move='mv -i'
 alias rm='trash-put'
 alias ln='ln -b'
