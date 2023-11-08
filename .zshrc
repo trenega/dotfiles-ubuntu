@@ -66,9 +66,10 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias mv='mv -i' alias cp='cp -i'
 alias copy='cp -ip' move='mv -i'
-
 alias rm='trash-put'
+alias ln='ln -b'
 
 alias d='cd ~/dotfiles-ubuntu'
 alias tes='cd ~/pl/test'
@@ -387,6 +388,10 @@ bindkey '^R' fzf-history-widget
 
 ##End key-bindings.zsh--------------------
 
+##Update fzf auto add code
+# 設定用のfzf.zshを読み込む処理が追加されています
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+
 ##Setup ssh-agent--------------------------
 # refs: https://h2plus.biz/hiromitsu/entry/791
 if [ -f ~/.ssh-agent ]; then
@@ -399,4 +404,5 @@ fi
 ssh-add -l >& /dev/null || ssh-add
 
 ##End Setup ssh-agent----------------------
+
 ### .zshrc ends here
