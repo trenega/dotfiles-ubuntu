@@ -750,6 +750,11 @@
 ;; dired
 (key-chord-define-global "di" 'dired)
 
+;; skk
+;; bing C-x C-j -> jk
+(when (require 'skk nil t)
+  (key-chord-define-global "jk" 'skk-mode))
+
 ;; End A TWO-key chord----------------------------------
 
 ;; comment out
