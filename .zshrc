@@ -127,6 +127,9 @@ alias lispi='rlwrap ros run'
 # Clojure repl
 alias clj='lein repl'
 
+# plocate
+alias locate='plocate'
+
 #End ALIAS AND FUNCTIONS------------------
 
 # viins keymap
