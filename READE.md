@@ -1,2 +1,0 @@
-# dotfiles-ubuntu
-# trenega
