@@ -408,4 +408,7 @@ ssh-add -l >& /dev/null || ssh-add
 
 ##End Setup ssh-agent----------------------
 
+#ファイルの上書きを阻止する
+setopt NO_CLOBBER
+
 ### .zshrc ends here
