@@ -31,4 +31,11 @@ export LESSCHARSET=utf-8
 # editor
 export EDITOR=vim
 
+# gcc-12.2.0
+export PATH=$HOME/mygcc/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/mygcc/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/mygcc/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$HOME/mygcc/lib64:$LIBRARY_PATH
+export LIBRARY_PATH=$HOME/mygcc/lib:$LIBRARY_PATH
+
 ###.zlogin file ends here
