@@ -75,11 +75,6 @@
 ;;;; Initialization
 ;;;;------------------------------------------------------
 
-;; Alt key -> Meta key setting
-;; refer: https://qiita.com/hayamiz/items/0f0b7a012ec730351678
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta)))
-
 ;; font
 (add-to-list 'default-frame-alist
              '(font . "UDEV Gothic NF-18"))
