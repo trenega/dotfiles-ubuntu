@@ -208,7 +208,32 @@
 (cond (window-system
   (setq x-select-enable-clipboard t)))
 
-;;;; End Initialization------------------------------------
+;; Indent-------------------------------------------------
+;; https://seesaawiki.jp/whiteflare503/d/Emacs%20%A5%A4%A5%F3%A5%C7%A5%F3%A5%C8
+(setq-default c-basic-offset 4 ;;基本インデント量4
+              tab-width 4      ;;タブ幅4
+              indent-tabs-mode nil)  ;;インデントをタブでするかスペースでするか
+
+;; 'c-basic-offset' を設定してから以下を設定すること
+(add-hook 'c-mode-hook
+         (lambda () (c-set-style "bsd"))) ;; indent 8
+
+;; http://yohshiy.blog.fc2.com/blog-entry-264.html
+;; init.el だけに設定されてしまう
+;;(setq c-basic-offset 4)
+
+;; ホックを使った設定
+;; (defun my-c-c++-mode-init ()
+;;   (setq c-basic-offset 4)
+;;   (lambda () (c-set-style "bsd")))  ;; indent 8
+
+;;(add-hook 'c-mode-hook 'my-c-c++-mode-init)
+;;(add-hook 'c++-mode-hook 'my-c-c++-mode-init)
+
+
+;; End Indent---------------------------------------------
+
+;;;; End Initialization-----------------------------------
 
 ;;; custom-set--------------------------------------------
 ;;  These 'custom-set are from `Emacs'! I don't write here.
@@ -218,9 +243,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
-;; '(highlight-indent-guides-method 'character)
+ '(highlight-indent-guides-method 'character)
  '(initial-frame-alist '((height . 38) (width . 125) (left . 0) (top . 0)))
- ;;'(menu-bar-mode nil)
  '(tool-bar-mode nil))
 
 (custom-set-faces
@@ -657,6 +681,9 @@
 ;; highlight-indent-guides
 (require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;; 今いる行がどのインデントにいるのかをわかりやすくするために responsive モードを有効にしている
+;; https://mugijiru.github.io/.emacs.d/ui/highlight-indent-guides/
+(setq highlight-indent-guides-responsive "stack")
 
 ;;; diredでファイル名のみを表示する
 ;; http://emacs.rubikitch.com/sd1411-dired-wdired/
@@ -792,10 +819,10 @@
 ;; (require 'ediprolog)
 ;;(setq ediprolog-system 'swi)
 (setq prolog-system 'swi)  ; optional, the system you are using;
-                            ; see `prolog-system' below for possible values
+                           ; see `prolog-system' below for possible values
 (setq auto-mode-alist (append '(("\\.pl\\'" . prolog-mode)
-                                 ("\\.m\\'" . mercury-mode))
-                                auto-mode-alist))
+                               ("\\.m\\'" . mercury-mode))
+                               auto-mode-alist))
 
 ;; view-mode と通常モードの切り替えコマンド
 ;; https://mugijiru.github.io/.emacs.d/editing/view-mode/
