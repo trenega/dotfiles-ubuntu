@@ -130,6 +130,9 @@ alias clj='lein repl'
 # plocate
 alias locate='plocate'
 
+# gcc
+alias gcc='gcc -o'
+
 #End ALIAS AND FUNCTIONS------------------
 
 # viins keymap
