@@ -75,6 +75,10 @@
 ;;;; Initialization
 ;;;;------------------------------------------------------
 
+;; Emacsの起動フォルダ
+;; https://futurismo.biz/archives/3035/
+(setq default-directory "/home/nis")
+
 ;; font
 (add-to-list 'default-frame-alist
              '(font . "UDEV Gothic NF-18"))
@@ -216,7 +220,7 @@
 
 ;; 'c-basic-offset' を設定してから以下を設定すること
 (add-hook 'c-mode-hook
-         (lambda () (c-set-style "linux"))) 
+         (lambda () (c-set-style "linux")))
 
 ;; http://yohshiy.blog.fc2.com/blog-entry-264.html
 ;; init.el だけに設定されてしまう
