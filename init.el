@@ -409,6 +409,10 @@
 ;; http://emacs.rubikitch.com/sd1411-dired-wdired/
 (straight-use-package 'dired-toggle)
 
+;; shell-pop-el
+;; shell-pop.el helps you to use shell easily on Emacs. Only one key action to work.
+;; https://github.com/kyagi/shell-pop-el
+(straight-use-package 'shell-pop)
 
 ;;--------------------------------------------------------
 ;; End To install a package Write Here!
@@ -698,6 +702,24 @@
 (setq wdired-allow-to-change-permissions t)
 (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
 
+;; shell-pop
+(require 'shell-pop)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(shell-pop-default-directory "/home/nis")
+ '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+ '(shell-pop-term-shell "/bin/zsh")
+;; '(shell-pop-universal-key "C-t")
+ '(shell-pop-window-size 30)
+ '(shell-pop-full-span t)
+ '(shell-pop-window-position "bottom")
+ '(shell-pop-autocd-to-working-dir t)
+ '(shell-pop-restore-window-configuration t)
+ '(shell-pop-cleanup-buffer-at-process-exit t))
+
 ;;; End Pagckage Settings-------------------------------
 
 ;;;;----------------------------------------------------
@@ -776,6 +798,10 @@
 ;; bing C-x C-j -> jk
 (when (require 'skk nil t)
   (key-chord-define-global "jk" 'skk-mode))
+
+;; shell-pop
+;; "sp" Shell-Pop
+(key-chord-define-global "sp" 'shell-pop)
 
 ;; End A TWO-key chord----------------------------------
 
@@ -860,18 +886,29 @@
 ;; alias indent-sexp
 (defalias 'is 'indent-sexp)
 
+;; Eshell
+;; https://futurismo.biz/archives/3035/
+
+(setq eshell-prompt-function
+      (lambda ()
+        (concat "[nis"
+                (eshell/pwd)
+                (if (= (user-uid) 0) "]\n# " "]\n$ "))))
+
 ;; eshell aliases
-;; ls
-;;(add-to-list 'eshell-command-aliases-list (list "ll" "ls -alF"))
-;;(add-to-list 'eshell-command-aliases-list (list "la" "ls -A"))
-;;(add-to-list 'eshell-command-aliases-list (list "l" "ls -CF"))
-(add-to-list 'eshell-command-aliases-list (list "mv" "mv -i"))
-(add-to-list 'eshell-command-aliases-list (list "cp" "cp -bi"))
-(add-to-list 'eshell-command-aliases-list (list "rm" "trash-put"))
-(add-to-list 'eshell-command-aliases-list (list "ln" "ln -b"))
-;;(add-to-list 'eshell-command-aliases-list (list ".." "cd .."))
-;;(add-to-list 'eshell-command-aliases-list (list "..2" "cd ../.."))
-;;(add-to-list 'eshell-command-aliases-list (list "..3" "cd ../../.."))
+(setq eshell-command-aliases-list
+      (append
+       (list
+        (list "ll" "ls -alF")
+        (list "la" "ls -A")
+        (list "l" "ls -CF")
+        ;; (list "o" "xdg-open")
+        ;; (list "emacs" "find-file $1")
+        ;; (list "m" "find-file $1")
+        ;; (list "mc" "find-file $1")
+         (list "di" "dired .")
+        ;; (list "l" "eshell/less $1")
+        )))
 
 ;; End alias----------------------------------------------
 
