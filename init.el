@@ -216,7 +216,7 @@
 
 ;; 'c-basic-offset' を設定してから以下を設定すること
 (add-hook 'c-mode-hook
-         (lambda () (c-set-style "bsd"))) ;; indent 8
+         (lambda () (c-set-style "linux"))) 
 
 ;; http://yohshiy.blog.fc2.com/blog-entry-264.html
 ;; init.el だけに設定されてしまう
@@ -859,6 +859,19 @@
 
 ;; alias indent-sexp
 (defalias 'is 'indent-sexp)
+
+;; eshell aliases
+;; ls
+;;(add-to-list 'eshell-command-aliases-list (list "ll" "ls -alF"))
+;;(add-to-list 'eshell-command-aliases-list (list "la" "ls -A"))
+;;(add-to-list 'eshell-command-aliases-list (list "l" "ls -CF"))
+(add-to-list 'eshell-command-aliases-list (list "mv" "mv -i"))
+(add-to-list 'eshell-command-aliases-list (list "cp" "cp -bi"))
+(add-to-list 'eshell-command-aliases-list (list "rm" "trash-put"))
+(add-to-list 'eshell-command-aliases-list (list "ln" "ln -b"))
+;;(add-to-list 'eshell-command-aliases-list (list ".." "cd .."))
+;;(add-to-list 'eshell-command-aliases-list (list "..2" "cd ../.."))
+;;(add-to-list 'eshell-command-aliases-list (list "..3" "cd ../../.."))
 
 ;; End alias----------------------------------------------
 
