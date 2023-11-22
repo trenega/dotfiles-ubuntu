@@ -417,6 +417,9 @@
 ;; shell-pop.el helps you to use shell easily on Emacs. Only one key action to work.
 ;; https://github.com/kyagi/shell-pop-el
 (straight-use-package 'shell-pop)
+;; term-run
+;; zsh を本領発揮させる
+(straight-use-package 'term-run)
 
 ;;--------------------------------------------------------
 ;; End To install a package Write Here!
@@ -713,7 +716,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(shell-pop-default-directory "/home/nis")
+ ;;'(shell-pop-default-directory "/home/nis")
  '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
  '(shell-pop-term-shell "/bin/zsh")
 ;; '(shell-pop-universal-key "C-t")
@@ -803,9 +806,16 @@
 (when (require 'skk nil t)
   (key-chord-define-global "jk" 'skk-mode))
 
+;; Eshell
+(key-chord-define-global "es" 'eshell)
+
 ;; shell-pop
 ;; "sp" Shell-Pop
 (key-chord-define-global "sp" 'shell-pop)
+
+;; term-run
+;; zsh を本領発揮させる
+(key-chord-define-global "te" 'term-run)
 
 ;; End A TWO-key chord----------------------------------
 
@@ -893,11 +903,11 @@
 ;; Eshell
 ;; https://futurismo.biz/archives/3035/
 
-(setq eshell-prompt-function
-      (lambda ()
-        (concat "[nis"
-                (eshell/pwd)
-                (if (= (user-uid) 0) "]\n# " "]\n$ "))))
+;; (setq eshell-prompt-function
+;;       (lambda ()
+;;         (concat "[nis"
+;;                 (eshell/pwd)
+;;                 (if (= (user-uid) 0) "]\n# " "]\n$ "))))
 
 ;; eshell aliases
 (setq eshell-command-aliases-list
