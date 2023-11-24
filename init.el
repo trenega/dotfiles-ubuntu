@@ -807,7 +807,7 @@
   (key-chord-define-global "jk" 'skk-mode))
 
 ;; Eshell
-(key-chord-define-global "es" 'eshell)
+(key-chord-define-global ";e" 'eshell)
 
 ;; shell-pop
 ;; "sp" Shell-Pop
@@ -926,7 +926,7 @@
 
 ;; End alias----------------------------------------------
 
-;;; End Custom Bind------------------------------------
+;;; End Custom Bind---------------------------------------
 
 ;;;;------------------------------------------------------
 ;;;; Customize Settings
