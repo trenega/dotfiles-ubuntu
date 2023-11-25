@@ -811,7 +811,7 @@
   (key-chord-define-global "jk" 'skk-mode))
 
 ;; Eshell
-(key-chord-define-global "es" 'eshell)
+(key-chord-define-global ";e" 'eshell)
 
 ;; shell-pop
 ;; "sp" Shell-Pop
@@ -821,6 +821,14 @@
 ;; zsh を本領発揮させる
 (key-chord-define-global "te" 'term-run)
 
+;; quickrun
+(key-chord-define-global ";q" 'quickrun)
+
+;; quickrun-shell
+(key-chord-define-global ";s" 'quickrun-shell)
+
+;; quickrun-region
+(key-chord-define-global ";r" 'quickrun-region)
 ;; End A TWO-key chord----------------------------------
 
 ;; comment out
@@ -829,6 +837,7 @@
 (bind-key "M-;" 'comment-dwim-2)
 
 ;; C-u -> scroll up
+
 ;; org-modeと関連パッケージには、C-uに多くの機能が付属してます。
 ;; refer: stackoverflow.com/questions/14302171/ctrlu-in-emacs-when-using-evil-key-bindings
 ;; (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
