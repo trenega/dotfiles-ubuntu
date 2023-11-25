@@ -421,6 +421,10 @@
 ;; zsh を本領発揮させる
 (straight-use-package 'term-run)
 
+;; quickrun
+;; quickrun によるコード実行
+(straight-use-package 'quickrun)
+
 ;;--------------------------------------------------------
 ;; End To install a package Write Here!
 ;;--------------------------------------------------------
